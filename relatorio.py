@@ -54,14 +54,14 @@ print(questionario_total_2)
 valor_diferenca = questionario_total - questionario_total_2
 print(valor_diferenca)
 
-#Tentando achar o valor correto de linhas
-# questionario_total = 0
-# for index, row in df.iterrows():
-#     for pergunta in perguntas:
-#         if not pd.isnull(row['Resposta']) and row['Indicador'] == pergunta:
-#             questionario_total += 1
-#             break  # Se uma resposta válida for encontrada para uma pergunta, saímos do loop interno
-# print(questionario_total)
+# Tentando achar o valor correto de linhas
+questionario_total = 0
+for index, row in df.iterrows():
+    for pergunta in perguntas:
+        if not pd.isnull(row['Resposta']) and row['Indicador'] == pergunta:
+            questionario_total += 1
+            break  # Se uma resposta válida for encontrada para uma pergunta, saímos do loop interno
+print(questionario_total)
 
 #Respostas possiveis no questionario 
 #['Satisfatório', 'Parcialmente satisfatório', 'Insatisfatório', 'Sim', 'Não', 'Parcialmente', nan, 'insatisfatório', 'reuniões', 'e-mails', 'interação com alunos e ou servidores', 'ofícios, memorandos e processos físicos', 'redes sociais', 'site e feed de notícias', 'SUAP', 'boletins eletrônicos']
@@ -121,6 +121,51 @@ print(indicador)
 print(indicador.unique())
 print(indicador.unique().tolist())
 
+respostas_gestor =  df.loc[df['Segmento'] == 'Gestor']
+perguntas_unicas_gestores = respostas_gestor['Indicador'].unique()
+print("\n")
+print(perguntas_unicas_gestores)
+print(len(perguntas_unicas_gestores))
+
+respostas_estudante = df.loc[df['Segmento'] == 'Estudante']
+perguntas_unicas_estudante = respostas_estudante['Indicador'].unique()
+print("\n")
+print(perguntas_unicas_estudante)
+print(len(perguntas_unicas_estudante))
+
+respostas_docente = df.loc[df['Segmento'] == 'Docente']
+perguntas_unicas_docente = respostas_docente['Indicador'].unique()
+print("\n")
+print(perguntas_unicas_docente)
+print(len(perguntas_unicas_docente))
+
+respostas_tecnico = df.loc[df['Segmento'] == 'Técnico']
+perguntas_unicas_tecnico = respostas_tecnico['Indicador'].unique()
+print("\n")
+print(perguntas_unicas_tecnico)
+print(len(perguntas_unicas_tecnico))
+
+
+# perguntas_para_todo = respostas_gestor['Indicador'].unique() == respostas_docente['Indicador'].unique()
+# print(perguntas_para_todo)
+
+perguntas_unicas_docente1 = set(df.loc[df['Segmento'] == 'Docente', 'Indicador'].unique())
+perguntas_unicas_estudante1 = set(df.loc[df['Segmento'] == 'Estudante', 'Indicador'].unique())
+perguntas_unicas_tecnico1 = set(df.loc[df['Segmento'] == 'Técnico', 'Indicador'].unique())
+perguntas_unicas_gestor1 = set(df.loc[df['Segmento'] == 'Gestor', 'Indicador'].unique())
+
+# Agora, encontre a interseção para ver quais perguntas ambos os grupos responderam
+perguntas_comum = perguntas_unicas_docente1.intersection(
+    perguntas_unicas_estudante1,
+    perguntas_unicas_docente1,
+    perguntas_unicas_gestor1,
+    perguntas_unicas_tecnico1
+    )
+
+print("Perguntas que docentes e estudantes responderam juntos:")
+print(perguntas_comum)
+print(len(perguntas_comum))
+
 # Exemplo para fazer multiplos gráficos
 dados = {
     'Categoria': ['A', 'B', 'C', 'D'],
@@ -157,10 +202,17 @@ for pergunta in perguntas:
     # Contar as respostas e plotar
     if not respostas.empty:
         contagem_respostas = respostas.value_counts()
+        
+         # Obter segmentos que participaram da pergunta
+        segmentos_participantes = df[df['Indicador'] == pergunta]['Segmento'].unique()
+
+        # Criar o título com os segmentos participantes
+        titulo = f"(Segmentos: {', '.join(segmentos_participantes)})"
+        
         contagem_respostas.plot(kind='bar')
 
         # Configurações de título e rótulos
-        plt.title(pergunta)
+        plt.title(pergunta + '\n' + titulo)
         plt.xlabel("Respostas")
         plt.ylabel("Quantidade")
 
