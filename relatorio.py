@@ -42,26 +42,26 @@ print("Pessoas: \n")
 print(quantidade_pessoas)
 
 #Quantidade de perguntas que foram realizadas
-perguntas = df['Indicador'].unique().tolist()
-perguntas_total  = 0
-for values in perguntas:
-    perguntas_total  += 1
-    print(perguntas_total, values)
-questionario_total  = quantidade_pessoas * (perguntas_total - 1)
-questionario_total_2 = gestor + tecnico + estudante + docente
-print(questionario_total)
-print(questionario_total_2)
-valor_diferenca = questionario_total - questionario_total_2
-print(valor_diferenca)
+# perguntas = df['Indicador'].unique().tolist()
+# perguntas_total  = 0
+# for values in perguntas:
+#     perguntas_total  += 1
+#     print(perguntas_total, values)
+# questionario_total  = quantidade_pessoas * (perguntas_total - 1)
+# questionario_total_2 = gestor + tecnico + estudante + docente
+# print(questionario_total)
+# print(questionario_total_2)
+# valor_diferenca = questionario_total - questionario_total_2
+# print(valor_diferenca)
 
 # Tentando achar o valor correto de linhas
-questionario_total = 0
-for index, row in df.iterrows():
-    for pergunta in perguntas:
-        if not pd.isnull(row['Resposta']) and row['Indicador'] == pergunta:
-            questionario_total += 1
-            break  # Se uma resposta válida for encontrada para uma pergunta, saímos do loop interno
-print(questionario_total)
+# questionario_total = 0
+# for index, row in df.iterrows():
+#     for pergunta in perguntas:
+#         if not pd.isnull(row['Resposta']) and row['Indicador'] == pergunta:
+#             questionario_total += 1
+#             break  # Se uma resposta válida for encontrada para uma pergunta, saímos do loop interno
+# print(questionario_total)
 
 #Respostas possiveis no questionario 
 #['Satisfatório', 'Parcialmente satisfatório', 'Insatisfatório', 'Sim', 'Não', 'Parcialmente', nan, 'insatisfatório', 'reuniões', 'e-mails', 'interação com alunos e ou servidores', 'ofícios, memorandos e processos físicos', 'redes sociais', 'site e feed de notícias', 'SUAP', 'boletins eletrônicos']
@@ -167,26 +167,26 @@ print(perguntas_comum)
 print(len(perguntas_comum))
 
 # Exemplo para fazer multiplos gráficos
-dados = {
-    'Categoria': ['A', 'B', 'C', 'D'],
-    'Valores1': [10, 20, 30, 40],
-    'Valores2': [15, 25, 35, 45]
-}
+# dados = {
+#     'Categoria': ['A', 'B', 'C', 'D'],
+#     'Valores1': [10, 20, 30, 40],
+#     'Valores2': [15, 25, 35, 45]
+# }
 
-df = pd.DataFrame(dados)
+# df = pd.DataFrame(dados)
 
-# Criar subplots para múltiplos gráficos
-fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+# # Criar subplots para múltiplos gráficos
+# fig, axs = plt.subplots(1, 2, figsize=(10, 5))
 
-# Criar gráficos para cada coluna no loop
-for i, coluna in enumerate(['Valores1', 'Valores2']):
-    df.plot(kind='bar', x='Categoria', y=coluna, ax=axs[i], title=f'Gráfico para {coluna}')
+# # Criar gráficos para cada coluna no loop
+# for i, coluna in enumerate(['Valores1', 'Valores2']):
+#     df.plot(kind='bar', x='Categoria', y=coluna, ax=axs[i], title=f'Gráfico para {coluna}')
 
-# Ajustar o layout para evitar sobreposições
-plt.tight_layout()
+# # Ajustar o layout para evitar sobreposições
+# plt.tight_layout()
 
-# Exibir os gráficos
-plt.show()
+# # Exibir os gráficos
+# plt.show()
 
 # Obter lista de perguntas únicas
 perguntas = df['Indicador'].unique().tolist()
@@ -202,21 +202,28 @@ for pergunta in perguntas:
     # Contar as respostas e plotar
     if not respostas.empty:
         contagem_respostas = respostas.value_counts()
+        # contagem_respostas = respostas.value_counts(normalize=True) * 100
+        votos_por_segmento = df['Segmento'].value_counts()
         
          # Obter segmentos que participaram da pergunta
         segmentos_participantes = df[df['Indicador'] == pergunta]['Segmento'].unique()
-
+        titulo2 = "Contagem de Votos por Segmento:\n"
         # Criar o título com os segmentos participantes
         titulo = f"(Segmentos: {', '.join(segmentos_participantes)})"
+        for segmento, votos in votos_por_segmento.items():
+            titulo2 += f"{segmento}: {votos} votos\n"
         
-        contagem_respostas.plot(kind='bar')
+        contagem_respostas.plot(kind='barh', color='green')
 
         # Configurações de título e rótulos
-        plt.title(pergunta + '\n' + titulo)
+        plt.title(pergunta + '\n' + titulo + "\n" + titulo2)
         plt.xlabel("Respostas")
         plt.ylabel("Quantidade")
 
         # Exibir o gráfico
         plt.show()
 print(x)
+
+
+
 
