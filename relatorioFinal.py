@@ -229,16 +229,23 @@ for pergunta in perguntas:
     percentual_respostas = respostas_por_segmento.div(respostas_por_segmento.sum(axis=1), axis=0) * 100
 
     # Cria o gráfico empilhado
-    ax = percentual_respostas.plot(kind='barh', stacked=True, figsize=(10,7), color=['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3'])
+    ax = percentual_respostas.plot(kind='barh', stacked=True, figsize=(10,7), color=['#1b9e77', '#d95f02', '#7570b3', '#e7298a'])
 
     #Adicona as porcentagens dentro das barras
     for i in ax.containers:
         ax.bar_label(i, label_type='center', fmt='%.1f%%')
     
+    # Configurar a fonte dos rótulos e o titulo
+    font = {'family': 'serif','fontweight': 'bold', 'color': 'darkblue', 'weight': 'bold', 'size': 14}
+    
+    # Obter eixo atual
+    ax = plt.gca()
+    # ax.set_yticklabels(ax.get_yticklabels(), fontsize=12, va='center', ha='right', rotation=0,labelpad=10) 
+    ax.tick_params(axis='y', pad=15)
     # Ajusta os rotulos e o titulo 
     plt.xlabel('Porcentagem')
-    plt.ylabel('Segmento')
-    plt.title('Porcentagem de Respostas por Segmento')
+    plt.ylabel('Segmento', labelpad=10)
+    plt.title(f'{pergunta}')
     plt.legend(title='Resposta', bbox_to_anchor=(1.05,1), loc='upper left')
     plt.show()
    
