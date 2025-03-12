@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib as plt
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('relatorio.csv')
+df = pd.read_csv('relatorio2.csv')
 print(df.describe())
 
 #Indicador,Subsídio p/ Avaliações,Modalidade,ID Respondente,Eixo,Dimensão,Macroprocesso,Segmento,Campus,Curso,Resposta
@@ -41,29 +41,6 @@ quantidade_pessoas = quantidade_aluno + quantidade_gestor + qunatidade_tecnico +
 print("Pessoas: \n")
 print(quantidade_pessoas)
 
-#Quantidade de perguntas que foram realizadas
-# perguntas = df['Indicador'].unique().tolist()
-# perguntas_total  = 0
-# for values in perguntas:
-#     perguntas_total  += 1
-#     print(perguntas_total, values)
-# questionario_total  = quantidade_pessoas * (perguntas_total - 1)
-# questionario_total_2 = gestor + tecnico + estudante + docente
-# print(questionario_total)
-# print(questionario_total_2)
-# valor_diferenca = questionario_total - questionario_total_2
-# print(valor_diferenca)
-
-# Tentando achar o valor correto de linhas
-# questionario_total = 0
-# for index, row in df.iterrows():
-#     for pergunta in perguntas:
-#         if not pd.isnull(row['Resposta']) and row['Indicador'] == pergunta:
-#             questionario_total += 1
-#             break  # Se uma resposta válida for encontrada para uma pergunta, saímos do loop interno
-# print(questionario_total)
-
-#Respostas possiveis no questionario 
 #['Satisfatório', 'Parcialmente satisfatório', 'Insatisfatório', 'Sim', 'Não', 'Parcialmente', nan, 'insatisfatório', 'reuniões', 'e-mails', 'interação com alunos e ou servidores', 'ofícios, memorandos e processos físicos', 'redes sociais', 'site e feed de notícias', 'SUAP', 'boletins eletrônicos']
 respostas_possiveis = df['Resposta'].unique().tolist()
 print(respostas_possiveis)
@@ -166,27 +143,6 @@ print("Perguntas que docentes e estudantes responderam juntos:")
 print(perguntas_comum)
 print(len(perguntas_comum))
 
-# Exemplo para fazer multiplos gráficos
-# dados = {
-#     'Categoria': ['A', 'B', 'C', 'D'],
-#     'Valores1': [10, 20, 30, 40],
-#     'Valores2': [15, 25, 35, 45]
-# }
-
-# df = pd.DataFrame(dados)
-
-# # Criar subplots para múltiplos gráficos
-# fig, axs = plt.subplots(1, 2, figsize=(10, 5))
-
-# # Criar gráficos para cada coluna no loop
-# for i, coluna in enumerate(['Valores1', 'Valores2']):
-#     df.plot(kind='bar', x='Categoria', y=coluna, ax=axs[i], title=f'Gráfico para {coluna}')
-
-# # Ajustar o layout para evitar sobreposições
-# plt.tight_layout()
-
-# # Exibir os gráficos
-# plt.show()
 
 # Obter lista de perguntas únicas
 perguntas = df['Indicador'].unique().tolist()
@@ -195,29 +151,6 @@ x = 1
 
 # Loop para criar um gráfico por vez para cada pergunta
 for pergunta in perguntas:
-    # Filtrar as respostas para a pergunta atual
-    # respostas_por_pergunta = df[df['Indicador'] == pergunta]
-    
-    # if not respostas_por_pergunta.empty:
-    #     # Criar um DataFrame para armazenar as porcentagens por segmento
-    #     porcentagens = pd.DataFrame()
-
-    #     # Processar cada segmento separadamente
-    #     for segmento in respostas_por_pergunta['Segmento'].unique():
-    #         respostas_por_segmento = respostas_por_pergunta[respostas_por_pergunta['Segmento'] == segmento]['Resposta']
-    #         porcentagem = respostas_por_segmento.value_counts(normalize=True) * 100
-    #         porcentagens[segmento] = porcentagem
-
-    #     # Plotar as barras horizontais empilhadas
-    #     porcentagens.plot(kind='barh', stacked=True, color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'], alpha=0.75)
-        
-    #     # Configurações de título e rótulos
-    #     plt.title(f'Porcentagem das Respostas por Segmento\nPergunta: {pergunta}')
-    #     plt.xlabel('Porcentagem (%)')
-    #     plt.ylabel('Respostas')
-
-    #     # Exibir o gráfico
-    #     plt.show()
 
     # Filtrar as respostas para a pergunta atual
     df_pergunta = df[df['Indicador'] == pergunta]
@@ -249,6 +182,4 @@ for pergunta in perguntas:
     plt.legend(title='Resposta', bbox_to_anchor=(1.05,1), loc='upper left')
     plt.show()
    
-
-
 print(x)
